@@ -14,7 +14,9 @@
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "WESPLITLOOT_USERNAME": "wesplitloot",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "WESPLITLOOT_PASSWORD": "eb5W5Wjsm2pF2Ldu"
       }
     },
     "wesplitlootapi": {
@@ -30,7 +32,6 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/api/values",
-      "environmentVariables": {},
       "httpPort": 61309
     }
   }

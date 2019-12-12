@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace wesplitlootapi.Controllers
 {
+    // this is old -> but represents CRUD on object in mongodb
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]

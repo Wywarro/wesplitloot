@@ -43,9 +43,15 @@ namespace wesplitlootapi
 
             services.Configure<MongoDBOption>(options =>
             {
-              options.ConnectionString
-                  = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-              options.Database
+                string userDb = Environment.GetEnvironmentVariable("WESPLITLOOT_USERNAME");
+                string passDb = Environment.GetEnvironmentVariable("WESPLITLOOT_PASSWORD");
+                string bareConnectionString
+                    = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+                string connectionString = bareConnectionString.Replace("<password>", passDb).Replace("<username>", userDb);
+
+                options.ConnectionString
+                  = connectionString;
+                options.Database
                   = Configuration.GetSection("MongoConnection:Database").Value;
             })
               .AddMongoDatabase()
@@ -68,12 +74,12 @@ namespace wesplitlootapi
                 cfg.TokenValidationParameters =
                      new TokenValidationParameters
                      {
-                       ValidIssuer = Configuration["JwtIssuer"],
-                       ValidAudience = Configuration["JwtIssuer"],
-                       IssuerSigningKey =
-                      new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
-                       ClockSkew = TimeSpan.Zero // remove delay of token when expire
-                       };
+                        ValidIssuer = Configuration["JwtIssuer"],
+                        ValidAudience = Configuration["JwtIssuer"],
+                        IssuerSigningKey =
+                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
+                            ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                     };
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //services.AddTransient<IAppUserContext, AppUserContext>();
