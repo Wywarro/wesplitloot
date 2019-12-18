@@ -4,9 +4,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AspNetCore.Identity.MongoDB;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
@@ -66,53 +69,43 @@ namespace wesplitlootapi
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme =
-                           JwtBearerDefaults.AuthenticationScheme;
+                           CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultScheme =
-                           JwtBearerDefaults.AuthenticationScheme;
+                           CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme =
-                           JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(cfg =>
+                           "Splitwise";
+            })
+            .AddCookie()
+            .AddOAuth("Splitwise", options =>
             {
-                cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
-                cfg.TokenValidationParameters =
-                     new TokenValidationParameters
-                     {
-                         ValidIssuer = Configuration["JwtIssuer"],
-                         ValidAudience = Configuration["JwtIssuer"],
-                         IssuerSigningKey =
-                            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
-                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
-                     };
+                options.ClientId = "Kq8swWewdB1bmdgtzQWQi6xhOieXZKswHtrYJ4oO";
+                options.ClientSecret = "ivx8gNdg0syYjSZORO0Ls30TpzaIk4CNuoTyuDwK";
+                options.CallbackPath = new Microsoft.AspNetCore.Http.PathString("/callback");
+
+                options.AuthorizationEndpoint = "https://secure.splitwise.com/oauth/authorize";
+                options.TokenEndpoint = "https://secure.splitwise.com/oauth/token";
+                options.UserInformationEndpoint = "https://www.splitwise.com/api/v3.0/get_current_user";
+
+                options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "user:id");
+                options.ClaimActions.MapJsonKey(ClaimTypes.Name, "user:email");
+
+                options.Events = new OAuthEvents
+                {
+                    OnCreatingTicket = async context =>
+                    {
+                        var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+                        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+
+                        var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
+                        response.EnsureSuccessStatusCode();
+
+                        var user = JObject.Parse(await response.Content.ReadAsStringAsync());
+
+                        context.RunClaimActions(user);
+                    }
+                };
             });
-            //.AddCookie()
-            //.AddOAuth("Splitwise", options =>
-            //{
-            //    options.ClientId = "Kq8swWewdB1bmdgtzQWQi6xhOieXZKswHtrYJ4oO";
-            //    options.ClientSecret = "ivx8gNdg0syYjSZORO0Ls30TpzaIk4CNuoTyuDwK";
-            //    options.CallbackPath = new Microsoft.AspNetCore.Http.PathString("/callback");
-
-            //    options.AuthorizationEndpoint = "https://secure.splitwise.com/oauth/authorize";
-            //    options.TokenEndpoint = "https://secure.splitwise.com/oauth/token";
-            //    options.UserInformationEndpoint = "https://www.splitwise.com/api/v3.0/get_current_user";
-
-            //    options.Events = new OAuthEvents
-            //    {
-            //        OnCreatingTicket = async context =>
-            //        {
-            //            var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
-            //            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            //            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
-
-            //            var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
-            //            response.EnsureSuccessStatusCode();
-
-            //            var user = JObject.Parse(await response.Content.ReadAsStringAsync());
-
-            //            context.RunClaimActions(user);
-            //        }
-            //    };
-            //});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             //services.AddTransient<IAppUserContext, AppUserContext>();
             //services.AddTransient<IAppUserRepository, AppUserRepository>();
