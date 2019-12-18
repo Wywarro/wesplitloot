@@ -11,7 +11,7 @@ namespace wesplitlootapi.Controllers
     public class SplitwiseController : Controller
     {
         [HttpGet]
-        public IActionResult Login(string returnUrl = "/")
+        public IActionResult Login(string returnUrl = "http://localhost:8081")
         {
             return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl });
         }
