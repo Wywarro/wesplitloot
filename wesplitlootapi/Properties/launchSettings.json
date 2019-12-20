@@ -1,0 +1,40 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:61308",
+      "sslPort": 0
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "",
+      "environmentVariables": {
+        "WESPLITLOOT_USERNAME": "wesplitloot",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "WESPLITLOOT_PASSWORD": "eb5W5Wjsm2pF2Ldu"
+      }
+    },
+    "wesplitlootapi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "",
+      "environmentVariables": {
+        "WESPLITLOOT_USERNAME": "wesplitloot",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "WESPLITLOOT_PASSWORD": "eb5W5Wjsm2pF2Ldu"
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "httpPort": 61309
+    }
+  }
+}
