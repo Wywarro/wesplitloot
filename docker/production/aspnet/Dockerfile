@@ -1,5 +1,5 @@
 # build .NET app:
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1 AS buildnet
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS buildnet
 WORKDIR /app
 
 COPY wesplitlootapi/WMCC.csproj ./
@@ -20,7 +20,7 @@ RUN npm install
 COPY frontend .
 RUN npm run build
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.1
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
 WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV ASPNETCORE_URLS=http://+:80
@@ -32,4 +32,4 @@ COPY --from=buildvue /backend/src/ClientApp /app/ClientApp
 
 WORKDIR /app
 
-ENTRYPOINT ["dotnet", "WMCC.dll"]
+ENTRYPOINT ["dotnet", "wesplitlootapi.dll"]

@@ -8,7 +8,7 @@ Automatically send expenses from Revolut to Splitwise.
 
 ## Overview ##
 
-* WeSplitLoot is a `ASP.NET Core 2.1` project with `VueJS` at frontend
+* WeSplitLoot is a `ASP.NET Core 2.2` project with `VueJS` at frontend
 * `MongoDB Atlas` is used as a database for this project
 * WeSplitLoot can be run at `Docker`
   

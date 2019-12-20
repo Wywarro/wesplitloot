@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-    wmcc-aspnet-dev:
+    loot-aspnet-dev:
         build:
             context: ./wesplitlootapi
             dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
             - "5000:80"
         volumes:
             - ./wesplitlootapi/ClientApp:/app/ClientApp
-    wmcc-vue:
+    loot-vue:
         build:
             context: .
             dockerfile: docker/development/vuejs/Dockerfile
@@ -18,4 +18,4 @@ services:
             - ./frontend:/app/src
             - ./wesplitlootapi/ClientApp:/app/backend/src/ClientApp
         depends_on: 
-            - wmcc-aspnet-dev
+            - loot--aspnet-dev
