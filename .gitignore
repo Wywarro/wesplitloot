@@ -375,3 +375,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 /.vscode
+
+ClientApp
+dist

@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+    wmcc:
+        build:
+            context: .
+            dockerfile: docker/production/aspnet/Dockerfile
+        image: furyan/wmcc:latest
+        environment:
+        ports: 
+            - "80:80"
+  
