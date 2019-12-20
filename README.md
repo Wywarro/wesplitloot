@@ -1,10 +1,9 @@
 # WeSplitLoot #
-* * *
+
 
 Automatically send expenses from Revolut to Splitwise.
 
 # Getting Started #
-* * *
 
 ## Overview ##
 
@@ -19,7 +18,7 @@ git clone <WeSplitLoot_repo>
 ```
 
 ## Docker Setup ##
-* * *
+
 To run the Docker containers in desired environment use the command below.
 
 #### Development environment ####
@@ -39,7 +38,7 @@ docker pull furyan/wesplitloot:latest
 
 
 ## Local Setup ##
-* * *
+
   
 ### Technical Requirements ##
 
