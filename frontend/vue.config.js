@@ -1,5 +1,5 @@
 module.exports = {
-  outputDir: '../backend/src/ClientApp/dist',
+  outputDir: '../wesplitlootapi/ClientApp/dist',
   "transpileDependencies": [
     "vuetify"
   ],

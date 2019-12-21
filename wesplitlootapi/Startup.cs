@@ -65,7 +65,6 @@ namespace wesplitlootapi
               .AddMongoDbContext<AppUser, AppRole>()
               .AddMongoStore<AppUser, AppRole>();
 
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme =
@@ -106,10 +105,15 @@ namespace wesplitlootapi
                     }
                 };
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = @"ClientApp/dist";
+            });
+
+            services.AddCors();
             //services.AddTransient<IAppUserContext, AppUserContext>();
             //services.AddTransient<IAppUserRepository, AppUserRepository>();
-          }
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -121,7 +125,20 @@ namespace wesplitlootapi
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseCors(options => {
+                options.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+            });
+
+            app.UseSpaStaticFiles();
+
+            app.UseCookiePolicy();
+
+            app.UseSpa(spa => {
+                spa.Options.SourcePath = @"ClientApp";
+            });
         }
     }
 }

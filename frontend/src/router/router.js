@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/',
+        path: '',
         name: 'home',
         component: Home
     },
@@ -21,7 +21,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if(!store.getters.isAuthenticated()) {
+    if(!store.getters.isAuthenticated) {
         next({
             path: 'http://localhost:61308/splitwise/login',
         });

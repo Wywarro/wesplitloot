@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace wesplitlootapi.Controllers
 {
-    [Route("[controller]/[action]")]
-    public class SplitwiseController : Controller
+    [Route("api/v1/authenticate")]
+    [ApiController]
+    public class SplitwiseController : ControllerBase
     {
         [HttpGet]
         public IActionResult Login(string returnUrl = "http://localhost:8081")
