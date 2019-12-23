@@ -48,6 +48,8 @@ namespace wesplitlootapi
                 options.Password.RequireDigit = true;
             });
 
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.Configure<MongoDBOption>(options =>
             {
                 string userDb = Environment.GetEnvironmentVariable("WESPLITLOOT_USERNAME");
@@ -136,8 +138,14 @@ namespace wesplitlootapi
 
             app.UseCookiePolicy();
 
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                  name: "default",
+                  template: "{controller}/{action=Index}/{id?}");
+            });
+
             app.UseSpa(spa => {
-                spa.Options.SourcePath = @"ClientApp";
+                spa.Options.SourcePath = @"ClientApp/dist";
             });
         }
     }

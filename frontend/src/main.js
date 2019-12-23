@@ -9,8 +9,11 @@ import Vuelidate from 'vuelidate'
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = "http://localhost:61308/api/v1/"
+Vue.prototype.$http = axios;
 
 Vue.use(Vuelidate);
+
+export const eventBus = new Vue();
 
 new Vue({
   router,

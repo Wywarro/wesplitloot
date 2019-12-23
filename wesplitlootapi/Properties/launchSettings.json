@@ -12,8 +12,9 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "",
       "environmentVariables": {
+        "SPLITWISE_CLIENT_ID": "Kq8swWewdB1bmdgtzQWQi6xhOieXZKswHtrYJ4oO",
+        "SPLITWISE_CLIENT_SECRET": "ivx8gNdg0syYjSZORO0Ls30TpzaIk4CNuoTyuDwK",
         "WESPLITLOOT_USERNAME": "wesplitloot",
         "ASPNETCORE_ENVIRONMENT": "Development",
         "WESPLITLOOT_PASSWORD": "eb5W5Wjsm2pF2Ldu"
@@ -22,7 +23,6 @@
     "wesplitlootapi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "",
       "environmentVariables": {
         "WESPLITLOOT_USERNAME": "wesplitloot",
         "ASPNETCORE_ENVIRONMENT": "Development",

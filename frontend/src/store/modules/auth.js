@@ -1,8 +1,12 @@
 const state = {
+    token: "",
     isAuthenticated: false
 };
 
 const getters = {
+    getToken() {
+        return state.token;
+    },
     isAuthenticated() {
         return state.isAuthenticated;
     }
@@ -10,13 +14,17 @@ const getters = {
 
 const mutations = {
     setIsAuthenticated(state, payload) {
-        state.isAuthenticated = payload.isAuthenticated
-    }
+        state.isAuthenticated = payload.isAuthenticated;
+    },
+    setToken(state, payload) {
+        state.token = payload.token;
+    },
 };
 
 const actions = {
     login: ({ commit }, payload) => {
         commit('setIsAuthenticated', payload);
+        commit('setToken', payload);
     }
 };
 

@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import axios from 'axios'
 
-import store from '../store/store'
+import Home from '@/views/Home.vue'
+import Login from '@/views/Login.vue'
+import Callback from '@/components/Callback.vue'
+
+import store from '@/store/store'
 
 Vue.use(VueRouter)
 
@@ -12,6 +16,16 @@ const routes = [
         name: 'home',
         component: Home
     },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login
+    },
+    {
+        path: '/oauth/callback',
+        name: 'callbeck',
+        component: Callback
+    }
 ]
 
 const router = new VueRouter({
@@ -22,9 +36,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if(!store.getters.isAuthenticated) {
-        next({
-            path: 'http://localhost:61308/splitwise/login',
-        });
+        next();
     } else {
         next()
     }

@@ -1,15 +1,17 @@
 <template>
     <div class="home">
-        <p>Hello</p>
+        <app-user></app-user>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import User from '@/components/user/User'
 
 export default {
     name: 'home',
     components: {
+        appUser: User,
     }
 }
 </script>
