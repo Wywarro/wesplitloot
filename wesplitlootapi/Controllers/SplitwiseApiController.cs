@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
+using wesplitlootapi.ExternalApi.Splitwise;
 
 namespace wesplitlootapi.Controllers
 {
@@ -13,9 +14,18 @@ namespace wesplitlootapi.Controllers
     public class SplitwiseApiController : ControllerBase
     {
         [Route("user")]
-        public string GetUser()
+        public ActionResult GetUser()
         {
-            return "hello";
+            Splitwise splitwise = new Splitwise();
+            string authorizationHeader = Request.Headers["Authorization"];
+            if (!authorizationHeader.Contains("Bearer"))
+            {
+                return BadRequest("No token passed");
+            }
+            string token = authorizationHeader.Substring(7);
+            string user = splitwise.GetCurrentUser(token);
+
+            return Ok(user);
         }
     }
 }

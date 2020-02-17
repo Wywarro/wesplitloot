@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:61308",
+      "applicationUrl": "http://localhost:61307",
       "sslPort": 0
     }
   },
@@ -11,7 +11,6 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
       "environmentVariables": {
         "SPLITWISE_CLIENT_ID": "Kq8swWewdB1bmdgtzQWQi6xhOieXZKswHtrYJ4oO",
         "SPLITWISE_CLIENT_SECRET": "ivx8gNdg0syYjSZORO0Ls30TpzaIk4CNuoTyuDwK",

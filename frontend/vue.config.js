@@ -3,9 +3,7 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-  configureWebpack: config => {
-    config.watchOptions = {
-      poll: true
-    }
-  }
+  devServer: {
+    proxy: 'http://localhost:61307',
+  },
 }

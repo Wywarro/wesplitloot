@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 
 import Home from '@/views/Home.vue'
 import Login from '@/views/Login.vue'
-import Callback from '@/components/Callback.vue'
+import TokenHandler from '@/views/TokenHandler.vue'
 
 import store from '@/store/store'
 
@@ -14,7 +14,15 @@ const routes = [
     {
         path: '',
         name: 'home',
-        component: Home
+        component: Home,
+        beforeEnter: (to, from, next) => {
+            if(store.getters.isAuthenticated) {
+                next();
+            } else {
+                location.replace('http://localhost:61307/accounts/splitwise/login')
+                next();
+            }
+        }
     },
     {
         path: '/login',
@@ -22,9 +30,9 @@ const routes = [
         component: Login
     },
     {
-        path: '/oauth/callback',
-        name: 'callbeck',
-        component: Callback
+        path: '/accounts/splitwise/token-handler',
+        name: 'tokenHandler',
+        component: TokenHandler
     }
 ]
 
@@ -33,13 +41,5 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
-
-router.beforeEach((to, from, next) => {
-    if(!store.getters.isAuthenticated) {
-        next();
-    } else {
-        next()
-    }
-});
 
 export default router

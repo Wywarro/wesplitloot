@@ -10,7 +10,5 @@ namespace wesplitlootapi.Models.Identity
   {
     public string FirstName { get; set; }
     public string LastName { get; set; }
-    public string SplitwiseConsumerKey { get; set; }
-    public string SplitwiseConsumerSecret { get; set; }
   }
 }

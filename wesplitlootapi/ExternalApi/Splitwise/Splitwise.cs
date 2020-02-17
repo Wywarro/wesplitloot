@@ -9,6 +9,7 @@ namespace wesplitlootapi.ExternalApi.Splitwise
 {
     public class Splitwise
     {
+        public const string TOKEN_ENDPOINT = "https://secure.splitwise.com/oauth/token";
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string BaseApiUrl { get; set; }
@@ -23,37 +24,24 @@ namespace wesplitlootapi.ExternalApi.Splitwise
 
         public string GetToken(string code)
         {
-            var client = new RestClient("https://secure.splitwise.com/oauth/token?" +
+            Requests tokenRequest = new Requests($"{TOKEN_ENDPOINT}?" +
                 $"client_id={ClientId}&" +
                 $"client_secret={ClientSecret}&" +
                 "grant_type=client_credentials&" +
-                $"code={code}")
-            {
-                Timeout = -1
-            };
-            var request = new RestRequest(Method.GET);
-            IRestResponse response = client.Execute(request);
+                $"code={code}", "no-token");
 
-            Token token = JsonConvert.DeserializeObject<Token>(response.Content);
+            tokenRequest.RestClient.Timeout = -1;
+
+            Token token = JsonConvert.DeserializeObject<Token>(tokenRequest.ReadRequest());
 
             return token.AccessToken;
         }
 
-        public string GetCurrentUser() 
+        public string GetCurrentUser(string token)
         {
-            RestClient client = new RestClient($"{BaseApiUrl}/get_current_user");
-            RestRequest request = new RestRequest(Method.GET);
-            IRestResponse response = client.Execute(request);
+            Requests userRequest = new Requests($"{BaseApiUrl}/get_current_user", token);
 
-            return response.Content;
+            return userRequest.ReadRequest();
         }
-    }
-
-    public class Token
-    {
-        [JsonProperty("access_token")]
-        public string AccessToken { get; set; }
-        [JsonProperty("token_type")]
-        public string TokenType { get; set; }
     }
 }

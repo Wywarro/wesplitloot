@@ -1,3 +1,4 @@
+.env
 .DS_Store
 node_modules
 /dist
@@ -378,3 +379,4 @@ yarn-error.log*
 
 ClientApp
 dist
+/frontend/*.local

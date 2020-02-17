@@ -1,11 +1,13 @@
 <template>
     <div>
         {{ user }}
+        {{ getToken }}
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from '@/splitloot_axios'
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -13,13 +15,18 @@ export default {
             user: {},
         }
     },
+    computed: {
+        ...mapGetters(["getToken", "isAuthenticated"]),
+    },
     created() {
-        axios({
-            method: "GET",
-            url: "https://www.splitwise.com/api/v3.0/get_current_user"
-        })
-        .then(response => { this.user = response.data })
-        .catch()
+        if (this.isAuthenticated) {
+            axios({
+                method: "get",
+                url: "api/v1/splitwise/user",
+            })
+            .then(response => { console.log(response.data); this.user = response.data })
+            .catch(error => { console.log(error); })
+        }
     }
 
 }

@@ -90,6 +90,8 @@ namespace wesplitlootapi
                 options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "user:id");
                 options.ClaimActions.MapJsonKey(ClaimTypes.Name, "user:email");
 
+                options.SaveTokens = true;
+
                 options.Events = new OAuthEvents
                 {
                     OnCreatingTicket = async context =>
@@ -125,8 +127,6 @@ namespace wesplitlootapi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseAuthentication();
-
             app.UseCors(options => {
                 options.AllowAnyOrigin()
                     .AllowAnyMethod()
@@ -137,6 +137,8 @@ namespace wesplitlootapi
             app.UseSpaStaticFiles();
 
             app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes => {
                 routes.MapRoute(

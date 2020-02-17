@@ -9,15 +9,25 @@ using wesplitlootapi.ExternalApi.Splitwise;
 
 namespace wesplitlootapi.Controllers
 {
-    [Route("api/v1/oauth/")]
+    [Route("accounts/splitwise")]
     [ApiController]
     public class SplitwiseLoginController : ControllerBase
     {
         [HttpGet]
         [Route("login")]
-        public IActionResult Login(string returnUrl = "/")
+        public IActionResult Login(string returnUrl = "http://localhost:8080")
         {
             return Challenge(new AuthenticationProperties() { RedirectUri = returnUrl });
+        }
+
+        [HttpGet]
+        [Route("callback")]
+        public IActionResult Callback(string code, string redirectUrl)
+        {
+            Splitwise splitwise = new Splitwise();
+
+            string token = splitwise.GetToken(code);
+            return Redirect($"http://localhost:8080/accounts/splitwise/token-handler?t={token}");
         }
 
         [HttpPost]

@@ -1,0 +1,9 @@
+{
+    "wrapAttributes": true,
+    "useTabs": false,
+    "tabWidth": 4,
+    "bracketSpacing": true,
+    "semi": true,
+    "singleQuote": false,
+    "printWidth": 100
+}

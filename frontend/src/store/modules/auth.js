@@ -4,10 +4,10 @@ const state = {
 };
 
 const getters = {
-    getToken() {
+    getToken(state) {
         return state.token;
     },
-    isAuthenticated() {
+    isAuthenticated(state) {
         return state.isAuthenticated;
     }
 };
